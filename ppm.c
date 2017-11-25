@@ -3,18 +3,14 @@
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
-
-
-
 void lerppm (FILE *arquivo, cabPPM cppm){
 	int i, j;
-	
 	fscanf(arquivo, "%c", &cppm.tipo);
 	fscanf(arquivo, "%i\n", &cppm.tipo2);
 	fscanf(arquivo, "%i ", &cppm.alt);
 	fscanf(arquivo, "%i\n", &cppm.larg);
 	fscanf(arquivo, "%i\n", &cppm.qualidade);
-	
+
 	pixPPM **pixels = malloc(cppm.alt*sizeof(int*));
 	if(pixels == NULL){
 		printf("Erro na alocação");
@@ -22,38 +18,26 @@ void lerppm (FILE *arquivo, cabPPM cppm){
 	for(i=0;i<cppm.alt;i++){	
 		pixels[i] = malloc(cppm.larg*sizeof(int));
 	}
-	printf("leu cabeçario\n");
+	
 
 	for(i=0;i<cppm.alt;i++){
 		for(j=0;j<cppm.larg;j++){
-/*
-		fread(&pixels[i][j].verde,sizeof(int),1,arquivo);
-		fread(&pixels[i][j].vermelho,sizeof(int),1,arquivo);
-		fread(&pixels[i][j].azul,sizeof(int),1,arquivo);
-	
-*/
 		fscanf(arquivo,"%hhu",&pixels[i][j].verde);
 		fscanf(arquivo,"%hhu",&pixels[i][j].vermelho);
 		fscanf(arquivo,"%hhu",&pixels[i][j].azul);
-		
 		}
 	}
-printf("leu corpo\n");
-	
-	fclose(arquivo);
 
-
+fclose(arquivo);
 escreverppm(cppm,pixels);
-escreverppmgray(cppm,pixels);
-
-	
-
+gauss2(cppm,pixels);
+//escreverppmgray(cppm,pixels);
 }
 	
 void escreverppm(cabPPM cppm, pixPPM **pixels){
 	FILE *arq1;
 	int i, j;
-	printf("Entrou na escrever!\n");
+	
 	arq1 = fopen("imagem.ppm", "w");
 
 	fprintf(arq1, "%c", cppm.tipo);
@@ -62,7 +46,7 @@ void escreverppm(cabPPM cppm, pixPPM **pixels){
 	fprintf(arq1, "%i\n", cppm.larg);
 	fprintf(arq1, "%i\n", cppm.qualidade);
 
-	printf("Escreveu cabeçario!\n");
+
 
 
 
@@ -85,7 +69,7 @@ void escreverppm(cabPPM cppm, pixPPM **pixels){
 void escreverppmgray(cabPPM cppm, pixPPM **pixels){
 	FILE *arq1;
 	int i, j;
-	printf("Entrou na escrever!\n");
+
 	arq1 = fopen("imagemgray.ppm", "w");
 
 	fprintf(arq1, "%c", cppm.tipo);
@@ -94,25 +78,14 @@ void escreverppmgray(cabPPM cppm, pixPPM **pixels){
 	fprintf(arq1, "%i\n", cppm.larg);
 	fprintf(arq1, "%i\n", cppm.qualidade);
 
-	printf("Escreveu cabeçario!\n");
-
-
-
+	
 
 	for(i=0;i<cppm.alt;i++){
 		for(j=0;j<cppm.larg;j++){
 
-			//fprintf(arquivo, "%d\n%d\n%d\n",pixels[i][j].verde,pixels[i][j].vermelho ,pixels[i][j].azul);
-/*	
-		fwrite(&pixels[i][j].verde, sizeof(int),1,arquivo);
-		fwrite(&pixels[i][j].vermelho, sizeof(int),1,arquivo);
-		fwrite(&pixels[i][j].azul, sizeof(int),1,arquivo);
-		*/
 			int cinza ;
 			cinza = (pixels[i][j].verde*0.30)+(pixels[i][j].vermelho*0.59)+(pixels[i][j].azul*0,11);
-			//if(cinza >255){
-			//	cinza=255;
-			//}
+			
 			pixels[i][j].verde = cinza;
 			pixels[i][j].vermelho= cinza;
 			pixels[i][j].azul = cinza;
@@ -132,62 +105,8 @@ fprintf(arq1,"%d\n",pixels[i][j].azul);
 	}
 		printf("Escreveu corpo! Gray\n");
 
-gauss2(cppm,pixels);
+
 }
-/*
-void gauss2(cabPPM cppm, pixPPM **pixels){
-
-	int y,x,i,j,newpx;
-	int filtro[5][5] = {{ 2,  4,  5,  4, 2 },
-                        { 4,  9, 12,  9, 4 },
-                        { 5, 12, 15, 12, 5 },
-                        { 4,  9, 12,  9, 4 },
-                        { 2,  4,  5,  4, 2 }};
-
-
-
-pixPPM **gaussIMG = calloc(1,cppm.alt*sizeof(int*));
-	if(gaussIMG == NULL){
-		printf("Erro na alocação");
-	}
-	for(i=0;i<cppm.alt;i++){	
-		gaussIMG[i] = calloc(1,cppm.larg*sizeof(int));
-	}
-	int row,col;
-
- int sum = 0;
- int div = 0;  
- printf("Entrou na Gauus 2\n");
-	 for( row = 0; row < cppm.alt; row++ ){
-        for( col = 0; col < cppm.larg; col++ ){
-           
-
-          
-
-		    for( y = 0; y < 5; y++ ){
-		            for( x = 0; x < 5; x++ )
-		            {
-		     
-		            px =  read_pixel( img,  col + (x - 2), row + (y - 2) );
-                    sum += ( px->red *  kernel[y][x] );
-                    div += kernel[y][x];
-		            }
-		        }
-
-		        newpx = sum / div;
-
-		        gaussIMG[row][col].verde = newpx;
-			gaussIMG[row][col].vermelho= newpx;
-			gaussIMG[row][col].azul = newpx;
-
-		       
-        }
-    }
-
-    escreverppmaguss(cppm, gaussIMG);
-}
-*/
-
 
 void gauss2(cabPPM cppm, pixPPM **pixels){
 
@@ -219,7 +138,7 @@ pixPPM **gaussIMG = malloc(cppm.alt*sizeof(int*));
 	}
 	
 
- printf("Entrou na Gauus 2\n");
+ printf("Entrou na Gauus \n");
 
 float novopixel ;
 float peso ;
@@ -245,13 +164,8 @@ for(int i = 0; i < cppm.alt; i++){
               
                     }
                 }   
-                                  
-             
             }
-        }
-     
-
-               
+        }           
 			novopixel = (int)novopixel/peso;
 			
         	gaussIMG[i][j].verde =novopixel;
@@ -260,38 +174,7 @@ for(int i = 0; i < cppm.alt; i++){
 
     }
 }
-
-/*
-	 for (int i = 0; i < cppm.alt; i++) {
-		for (int j = 0; j < cppm.larg; j++) {
-	
-			int filter = 0 ;
-			int div =0;
-			for (int k = 0; k < 3; k++) {
-				for (int l = 0; l < 3; l++) {
-					if ( ((i-1+k) >= 0 && (j-1+l) >= 0) && (i+1 < cppm.alt && j+1 < cppm.larg) ) {
-						int a = i-1+k;
-						int b= j-1+l;
-						filter =(int)filter +( pixels[a][b].verde * (filtro[k][l]));
-						div= filtro[k][l]+div;
-						
-					}
-				}
-			}
-			filter =(int) filter/div;
-			
-			gaussIMG[i][j].verde = filter;
-			gaussIMG[i][j].vermelho = filter;
-			gaussIMG[i][j].azul = filter;
-			
-		}
-
-	}
-	*/
-
-
-
-    escreverppmaguss(cppm, gaussIMG);
+  //  escreverppmaguss(cppm, gaussIMG);
    sobel(cppm, gaussIMG);
 
 }
@@ -350,48 +233,39 @@ void sobel ( cabPPM cppm, pixPPM **pixels){
 		sobelIMG[z] = malloc(cppm.larg*sizeof(int));
 	}
 	
-			
-
-for (int i=0; i < cppm.alt; i++) {
-		for (int j=0; j < cppm.larg; j++) {
+for (int i=1; i < cppm.alt-1; i++) {
+		for (int j=1; j < cppm.larg-1; j++) {
 			aux_x = 0;
 			aux_y = 0;
 			for (int k=0; k < 3; k++) {
 				for (int l=0; l < 3; l++) {
-					if ( (i+k-1 < 0) || (j+l-1 < 0) || ((unsigned int)i-1+k >= cppm.alt) || ((unsigned int)j-1+l >= cppm.larg) ) {
-						continue;
-					}
+					
 
-					aux_x += (double) pixels[i+k-1][j+l-1].vermelho * sobelx[k][l];
-					aux_y += (double) pixels[i+k-1][j+l-1].vermelho * sobely[k][l];
+					aux_x += pixels[i+k-1][j+l-1].vermelho * sobelx[k][l];
+					aux_y += pixels[i+k-1][j+l-1].vermelho * sobely[k][l];
 				
 				}
 			}
-			unsigned char sobel = sqrt((aux_x * aux_x) + (aux_y * aux_y));
+			double sobel = abs(sqrt((aux_x * aux_x) + (aux_y * aux_y)));
 			
-			if (sobel > cppm.qualidade) { 
-				sobelIMG[i][j].vermelho = 255;
-				sobelIMG[i][j].azul = 255;
-				sobelIMG[i][j].verde = 255;
+			
+				sobelIMG[i][j].vermelho = sobel;
+				sobelIMG[i][j].azul = sobel;
+				sobelIMG[i][j].verde = sobel;
 				
-			}
-			else {
-				sobelIMG[i][j].vermelho  = sobel ;
-				sobelIMG[i][j].azul = sobel ;
-				sobelIMG[i][j].verde  = sobel ;
-			}
-		}
+			
+			
 	}
-
-
+	}
 
   	escreversobel(cppm, sobelIMG);
 
 }
+
 void escreversobel(cabPPM cppm, pixPPM **sobelIMG){
 	FILE *arq4;
 	int i, j;
-	printf("Entrou na escrever SOBEL!\n");
+
 	arq4 = fopen("imagemsobel.ppm", "w");
 
 	
@@ -400,9 +274,6 @@ void escreversobel(cabPPM cppm, pixPPM **sobelIMG){
 	fprintf(arq4, "%i ", cppm.alt);
 	fprintf(arq4, "%i\n", cppm.larg);
 	fprintf(arq4, "%i\n", cppm.qualidade);
-
-	printf("Escreveu cabeçario!\n");
-
 
 
 
@@ -417,5 +288,27 @@ void escreversobel(cabPPM cppm, pixPPM **sobelIMG){
 	}
 		printf("Escreveu corpo! SOBEL!\n");
 
+fclose(arq4);
+FILE *arq5;
+arq5 = fopen("imagempbm.pbm", "w");
+	fprintf(arq5, "P3");
+	fprintf(arq5, "%i ", cppm.alt);
+	fprintf(arq5, "%i\n", cppm.larg);
+	fprintf(arq5, "1\n");
 
+	for(i=0;i<cppm.alt;i++){
+		for(j=0;j<cppm.larg;j++){
+			if(sobelIMG[i][j].vermelho >= 150){
+	fprintf(arq5,"1\n");
+	fprintf(arq5,"1\n");
+	fprintf(arq5,"1\n");
+			}else{
+	fprintf(arq5,"0\n");
+	fprintf(arq5,"0\n");
+	fprintf(arq5,"0\n");
+			}
+	
+	
+		}
+	}
 }
