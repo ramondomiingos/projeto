@@ -12,7 +12,7 @@ A struct seria imagem, com cabeçario, e dentro dela outro tipo para os pixel, d
 
 ❏ Como compilar o projeto. <br>
 gcc main.c ppm.c ppm.h -o catarata -lm<br>
-./catarata -i <inputfile> -f <formato (ex.:ppm)> -o <outputfile>
+./catarata -i <inputfile> -f <formato (ex.:ppm)> -o < outputfile > <br>
 
 ❏ Em caso de duplas:<br>
 ○ Identificação dos autores;<br>
