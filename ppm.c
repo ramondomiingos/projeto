@@ -7,11 +7,11 @@ void lerppm (FILE *arquivo, cabPPM cppm){
 	int i, j;
 	fscanf(arquivo, "%c", &cppm.tipo);
 	fscanf(arquivo, "%i\n", &cppm.tipo2);
-	fscanf(arquivo, "%i ", &cppm.alt);
-	fscanf(arquivo, "%i\n", &cppm.larg);
+	fscanf(arquivo, "%i ", &cppm.larg);
+	fscanf(arquivo, "%i\n", &cppm.alt);
 	fscanf(arquivo, "%i\n", &cppm.qualidade);
 
-	pixPPM **pixels = malloc(cppm.alt*sizeof(int*));
+	pixPPM **pixels = malloc(cppm.alt*sizeof(pixPPM*));
 	if(pixels == NULL){
 		printf("Erro na alocação");
 	}
@@ -42,8 +42,8 @@ void escreverppm(cabPPM cppm, pixPPM **pixels){
 
 	fprintf(arq1, "%c", cppm.tipo);
 	fprintf(arq1, "%i\n", cppm.tipo2);
-	fprintf(arq1, "%i ", cppm.alt);
-	fprintf(arq1, "%i\n", cppm.larg);
+	fprintf(arq1, "%i ", cppm.larg);
+	fprintf(arq1, "%i\n", cppm.alt);
 	fprintf(arq1, "%i\n", cppm.qualidade);
 
 
@@ -74,8 +74,8 @@ void escreverppmgray(cabPPM cppm, pixPPM **pixels){
 
 	fprintf(arq1, "%c", cppm.tipo);
 	fprintf(arq1, "%i\n", cppm.tipo2);
-	fprintf(arq1, "%i ", cppm.alt);
-	fprintf(arq1, "%i\n", cppm.larg);
+	fprintf(arq1, "%i ", cppm.larg);
+	fprintf(arq1, "%i\n", cppm.alt);
 	fprintf(arq1, "%i\n", cppm.qualidade);
 
 	
@@ -129,7 +129,7 @@ void gauss2(cabPPM cppm, pixPPM **pixels){
 					{1,1,1}};
 
 
-pixPPM **gaussIMG = malloc(cppm.alt*sizeof(int*));
+pixPPM **gaussIMG = malloc(cppm.alt*sizeof(pixPPM*));
 	if(gaussIMG == NULL){
 		printf("Erro na alocação");
 	}
@@ -192,8 +192,8 @@ void escreverppmaguss(cabPPM cppm, pixPPM **gaussIMG){
 	
 	fprintf(arq3, "%c", cppm.tipo);
 	fprintf(arq3, "%i\n", cppm.tipo2);
-	fprintf(arq3, "%i ", cppm.alt);
-	fprintf(arq3, "%i\n", cppm.larg);
+	fprintf(arq3, "%i ", cppm.larg);
+	fprintf(arq3, "%i\n", cppm.alt);
 	fprintf(arq3, "%i\n", cppm.qualidade);
 
 	printf("Escreveu cabeçario!\n");
@@ -225,7 +225,7 @@ void sobel ( cabPPM cppm, pixPPM **pixels){
 
 			double aux_x = 0;
 			double aux_y = 0;
-	pixPPM **sobelIMG = malloc(cppm.alt*sizeof(int*));
+	pixPPM **sobelIMG = malloc(cppm.alt*sizeof(pixPPM*));
 	if(sobelIMG == NULL){
 		printf("Erro na alocação");
 	}
@@ -271,8 +271,8 @@ void escreversobel(cabPPM cppm, pixPPM **sobelIMG){
 	
 	fprintf(arq4, "%c", cppm.tipo);
 	fprintf(arq4, "%i\n", cppm.tipo2);
-	fprintf(arq4, "%i ", cppm.alt);
-	fprintf(arq4, "%i\n", cppm.larg);
+	fprintf(arq4, "%i ", cppm.larg);
+	fprintf(arq4, "%i\n", cppm.alt);
 	fprintf(arq4, "%i\n", cppm.qualidade);
 
 
@@ -292,8 +292,8 @@ fclose(arq4);
 FILE *arq5;
 arq5 = fopen("imagempbm.pbm", "w");
 	fprintf(arq5, "P3");
-	fprintf(arq5, "%i ", cppm.alt);
-	fprintf(arq5, "%i\n", cppm.larg);
+	fprintf(arq5, "%i ", cppm.larg);
+	fprintf(arq5, "%i\n", cppm.alt);
 	fprintf(arq5, "1\n");
 
 	for(i=0;i<cppm.alt;i++){
