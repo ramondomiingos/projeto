@@ -1,6 +1,6 @@
 ❏ O que  foi feito 
 ->Realce de Arestas
-->Transformação​ ​da​ ​imagem​ ​colorida​ ​para​ ​tons​ ​de​ ​cinza;
+->Transformação da imagem colorida para tons de cinza;
 ->Aplicação do filtro gaussiano;
 ->Aplicaçaão do Filtro de Sobel;
 
@@ -20,7 +20,9 @@ RAMON DOMINGOS DUARTE OLIVEIRA
 FÁBIO LEONARDO BRITO DE SOUSA
 
 ○ Contribuição de cada integrante no desenvolvimento do projeto 
-->Transformação​ ​da​ ​imagem​ ​colorida​ ​para​ ​tons​ ​de​ ​cinza -  Ramon;
+->GetOpt- Ramon
+->Leitura correta dos pixels da imamge,e armazenmaneto em matriz - Fabio;
+->Transformação da imagem colorida para tons de cinza -  Ramon;
 ->Aplicação do filtro gaussiano - Ambos;
 ->Aplicaçaão do Filtro de Sobel - Fábio;
 
