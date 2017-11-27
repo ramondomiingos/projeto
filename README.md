@@ -29,6 +29,6 @@ FÁBIO LEONARDO BRITO DE SOUSA
 ->Aplicação do filtro gaussiano - Ambos;<br>
 ->Aplicaçaão do Filtro de Sobel - Fábio;<br>
 ->makefile - Ramon<br>
-->Identificação do circulo mairo;<br>
-->Segmentação da pupila em tons de cinza;<br>
+->Identificação do circulo maior - Ramon;<br>
+->Segmentação da pupila em tons de cinza - Fabio;<br> 
 
