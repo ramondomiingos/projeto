@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
+#define PI 3.141592
 void lerppm (FILE *arquivo, cabPPM cppm){
 	int i, j;
 	fscanf(arquivo, "%c", &cppm.tipo);
@@ -16,7 +17,7 @@ void lerppm (FILE *arquivo, cabPPM cppm){
 		printf("Erro na alocação");
 	}
 	for(i=0;i<cppm.alt;i++){	
-		pixels[i] = malloc(cppm.larg*sizeof(int));
+		pixels[i] = malloc(cppm.larg*sizeof(pixPPM));
 	}
 	
 
@@ -119,14 +120,14 @@ void gauss2(cabPPM cppm, pixPPM **pixels){
 						{2, 4, 7, 8, 7, 4, 2}, 
 						{1, 3, 4, 5, 4, 3, 1}, 
 						{1, 1, 2, 2, 2, 1, 1}};*/
-	/*int filtro[5][5] = {{2, 4 , 5, 4, 2},
+	int filtro[5][5] = {{2, 4 , 5, 4, 2},
 						{4 , 9, 12, 9, 4},
 						{5, 12, 15, 12,5},
 						{4, 9, 12, 9, 4},
-						{2, 4 , 5, 4, 2}};*/
-	int filtro[3][3]={{1,1 ,1},
+						{2, 4 , 5, 4, 2}};
+	/*int filtro[3][3]={{1,1 ,1},
 					{2, 40, 2},
-					{1,1,1}};
+					{1,1,1}};*/
 
 
 pixPPM **gaussIMG = malloc(cppm.alt*sizeof(pixPPM*));
@@ -147,17 +148,17 @@ for(int i = 0; i < cppm.alt; i++){
  for(int j = 0; j < cppm.larg; j++) {   
         novopixel = 0;
          peso = 0;
-        for( int a = -1; a < 1; a++){               
-            for( int b = -1; b < 1; b++){
+        for( int a = -2; a < 2; a++){               
+            for( int b = -2; b < 2; b++){
 
-                if((i+a >= 0 ) && (i+a < cppm.alt-1)){ 
-                	if((j+b >= 0 ) && (j+b < cppm.larg-1)){
+                if((i+a >= 0 ) && (i+a < cppm.alt-2)){ 
+                	if((j+b >= 0 ) && (j+b < cppm.larg-2)){
 
 
                    int one =i+a;
                    int two = j+b;
                    int valor = pixels[one][two].azul;
-                   int valordofiltro= filtro[a+1][b+1];
+                   int valordofiltro= filtro[a+2][b+2];
 
                     novopixel = (novopixel + ( valor * valordofiltro));
                     peso = peso + valordofiltro;
@@ -166,7 +167,7 @@ for(int i = 0; i < cppm.alt; i++){
                 }   
             }
         }           
-			novopixel = (int)novopixel/peso;
+			novopixel = (int)novopixel/159;
 			
         	gaussIMG[i][j].verde =novopixel;
 			gaussIMG[i][j].vermelho = novopixel;
@@ -230,7 +231,7 @@ void sobel ( cabPPM cppm, pixPPM **pixels){
 		printf("Erro na alocação");
 	}
 	for(int z=0;z<cppm.alt;z++){	
-		sobelIMG[z] = malloc(cppm.larg*sizeof(int));
+		sobelIMG[z] = malloc(cppm.larg*sizeof(pixPPM));
 	}
 	
 for (int i=1; i < cppm.alt-1; i++) {

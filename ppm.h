@@ -14,7 +14,11 @@ typedef struct CabePPM{
 	int qualidade;
 }cabPPM;
 
-
+typedef struct {
+int x;
+int y;
+int r;
+}raio;
 void lerppm (FILE *arquivo, cabPPM cppm);
 void escreverppm(cabPPM cppm, pixPPM **pixels);
 void escreverppmgray(cabPPM cppm, pixPPM **pixels);
