@@ -12,7 +12,7 @@
 A struct seria imagem, com cabeçario, e dentro dela outro tipo para os pixel, diferente do que fizemso sendo 2 structs totalmete separadas.
 
 ❏ Como compilar o projeto. <br>
-gcc main.c ppm.c ppm.h -o catarata -lm<br>
+make <br>
 ./catarata -i <inputfile> -f <formato (ex.:ppm)> -o < outputfile > <br>
 
 ❏ Em caso de duplas:<br>
