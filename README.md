@@ -1,9 +1,11 @@
 ❏ O que  foi feito <br>
-->Makefile
+->Makefile<br>
 ->Realce de Arestas<br>
 ->Transformação da imagem colorida para tons de cinza;<br>
 ->Aplicação do filtro gaussiano;<br>
 ->Aplicaçaão do Filtro de Sobel;<br>
+->Identificação do maior circulo;<br>
+->segmentação da Pupila;
 
 
 ❏ O que não foi feito :<br>
@@ -26,4 +28,7 @@ FÁBIO LEONARDO BRITO DE SOUSA
 ->Transformação da imagem colorida para tons de cinza -  Ramon;<br>
 ->Aplicação do filtro gaussiano - Ambos;<br>
 ->Aplicaçaão do Filtro de Sobel - Fábio;<br>
-->makefile - Ramon
+->makefile - Ramon<br>
+->Identificação do circulo mairo;<br>
+->Segmentação da pupila em tons de cinza;<br>
+
