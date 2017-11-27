@@ -1,4 +1,5 @@
 ❏ O que  foi feito <br>
+->Makefile
 ->Realce de Arestas<br>
 ->Transformação da imagem colorida para tons de cinza;<br>
 ->Aplicação do filtro gaussiano;<br>
@@ -25,3 +26,4 @@ FÁBIO LEONARDO BRITO DE SOUSA
 ->Transformação da imagem colorida para tons de cinza -  Ramon;<br>
 ->Aplicação do filtro gaussiano - Ambos;<br>
 ->Aplicaçaão do Filtro de Sobel - Fábio;<br>
+->makefile - Ramon
